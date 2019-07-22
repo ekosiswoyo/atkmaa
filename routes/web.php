@@ -34,9 +34,31 @@ Route::delete('/barang/destroy/{id}',['uses' => 'BarangController@destroy']);
 Route::get('/barang/{id}/edit', 'BarangController@edit');
 Route::post('/barang/{id}', 'BarangController@update');
 
+
 // ============================ DATA GUDANG ==============================================
 Route::get('/gudang', 'GudangController@index');
 Route::post('/gudang', 'GudangController@insert');
 Route::delete('/gudang/destroy/{id}',['uses' => 'GudangController@destroy']);
 Route::get('/gudang/{id}/edit', 'GudangController@edit');
 Route::post('/gudang/{id}', 'GudangController@update');
+
+
+// ============================ DATA TRANSAKSI TAMBAH STOK GA==============================================
+Route::get('/trans', 'TransController@index');
+// Route::get('/trans/{id}', 'TransController@all');
+
+Route::post('/trans/copyall', 'TransController@copyall');
+Route::get('/trans/{id}/edit', 'TransController@edit');
+Route::post('/trans/{id}', 'TransController@update');
+
+Route::get('/transcab/{id}/editcab', 'TransController@editcab');
+Route::post('/transcab/{id}', 'TransController@updatecab');
+
+
+
+// ============================ DATA TRANSAKSI TAMBAH STOK CAB ==============================================
+Route::get('/transcab', 'TransController@indexcab');
+// Route::get('/trans/{id}', 'TransController@all');
+Route::get('/trans/{id}/edit', 'TransController@edit');
+Route::post('/trans/{id}', 'TransController@update');
+Route::post('/trans/copyall', 'TransController@copyall');

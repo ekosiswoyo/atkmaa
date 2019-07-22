@@ -22,20 +22,21 @@
                             <div class="col-6 col-md-6 col-lg-6">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h4>Input Data</h4>
+                                        <h4>Edit Data</h4>
                                     </div>
-                                    <form action="" method="post" role="form">
+                                    <form action="/gudang/{{$gudang->id_gudang_brg}}" method="post" role="form">
                                         {{csrf_field()}}
                                     <div class="card-body">
                                         <div class="form-group">    
                                             <label>ID</label>
-                                            <input type="text" class="form-control" placeholder="Masukkan ID" name="id_gudang_brg" value="{{$id_gudang_brg}}" readonly>
+                                            <input type="text" class="form-control" placeholder="Masukkan ID" name="id_gudang_brg" value="{{$gudang->id_gudang_brg}}" readonly>
                                         </div>
 
                                         <div class="form-group">
                                         <label>Nama Barang</label>
                                         <select class="form-control select2" name="id_barang">
-                                        <option> -- PILIH SATUAN --</option>
+                                        <option  value="{{$gudang->id_barang}}">{{$gudang->id_barang}} ( {{$gudang->nm_barang}} )</option>
+                                        <option> -- PILIH SATUAN -- </option>
                                             @foreach($barang as $barangs)
                                             <option value="{{$barangs->id_barang}}">{{$barangs->id_barang}} ( {{$barangs->nm_barang}} )</option>
                                             @endforeach
@@ -44,7 +45,7 @@
 
                                         <div class="form-group">    
                                         <label>PIC</label>
-                                        <input type="text" class="form-control" placeholder="Masukkan PIC" name="pic" required>
+                                        <input type="text" class="form-control" placeholder="Masukkan PIC" name="pic"  value="{{$gudang->pic}}"  required>
                                         </div>
 
                                         
@@ -58,31 +59,31 @@
                             </div>
                             <div class="col-6 col-md-6 col-lg-6">
                                 <div class="card">
-                                    <!-- <div class="card-header">
+                                    <div class="card-header">
                                         <h4>Input Data</h4>
-                                    </div> -->
+                                    </div>
                                     <div class="card-body">
                                         
 
                                         <div class="form-group">    
                                         <label>Jumlah Barang</label>
-                                        <input type="text" class="form-control" placeholder="Masukkan Jumlah Barang" name="jml" required>
+                                        <input type="text" class="form-control" placeholder="Masukkan Jumlah Barang" name="jml"  value="{{$gudang->jml}}"  required>
                                         </div>
 
                                         <div class="form-group">    
                                         <label>Harga Barang</label>
-                                        <input type="text" class="form-control" placeholder="Masukkan Harga Barang" name="harga" required>
+                                        <input type="text" class="form-control" placeholder="Masukkan Harga Barang" name="harga"  value="{{$gudang->harga}}"  required>
                                         </div>
 
                                         <div class="form-group">    
                                         <label>Buffer MIN</label>
-                                        <input type="text" class="form-control" placeholder="Masukkan Buffer MIN" name="min" required>
+                                        <input type="text" class="form-control" placeholder="Masukkan Buffer MIN" name="min"  value="{{$gudang->min}}" required>
                                         </div>
 
 
                                         <div class="form-group">    
                                         <label>Buffer MAX</label>
-                                        <input type="text" class="form-control" placeholder="Masukkan Buffer MAX" name="max" required>
+                                        <input type="text" class="form-control" placeholder="Masukkan Buffer MAX" name="max"  value="{{$gudang->max}}" required>
                                         </div>
 
                                         
@@ -125,8 +126,8 @@
                             <td>{{$datas->id_gudang_brg}}</td>
                             <td>{{$datas->id_barang}}</td>
                             <td>{{$datas->pic}}</td>
-                            <td><a href="/gudang/{{$datas->id_gudang_brg}}/edit"><button type="button" class="btn btn-info">Edit</button></a>
-                            <button class="btn btn-warning" onClick="deleteData('{{$datas->id_gudang_brg}}')"  data-id=" {{$datas->id_gudang_brg}}"  >Delete</button></td>
+                            <td><a href="/barang/{{$datas->id_barang}}/edit"><button type="button" class="btn btn-info">Edit</button></a>
+                            <button class="btn btn-warning" onClick="deleteData('{{$datas->id_barang}}')"  data-id=" {{$datas->id_barang}}"  >Delete</button></td>
                           </tr>
                         @endforeach
                         </tbody>

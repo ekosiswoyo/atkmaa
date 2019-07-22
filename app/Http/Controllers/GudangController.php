@@ -74,7 +74,10 @@ class GudangController extends Controller
         $barang = DB::table('atk_barangs')
             ->orderBy('atk_barangs.id_barang','asc')->get();
 
-        $gudang = DB::table('atk_gudangs')->where('id_gudang_brg',$id)->first();
+        $gudang = DB::table('atk_gudangs')
+                ->join('atk_barangs','atk_gudangs.id_barang','=','atk_barangs.id_barang')
+                ->where('atk_gudangs.id_gudang_brg',$id)->first();
+        
 
       return view ('/app/editgudang', compact('gudang','barang','data'));
     }

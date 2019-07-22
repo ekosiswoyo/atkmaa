@@ -34,6 +34,9 @@
   <link rel="stylesheet" href="{{ asset('assets/css/style.css')}}">
   <link rel="stylesheet" href="{{ asset('assets/css/components.css')}}">
   <meta name="csrf-token" content="{{ csrf_token() }}">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
 <!-- Start GA -->
 <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
 <script>
@@ -280,8 +283,10 @@
             <li class="menu-header">Data Master</li>
             <li><a class="nav-link" href="/satuan"><i class="far fa-square"></i> <span>Data Satuan</span></a></li>
             <li><a class="nav-link" href="/barang"><i class="far fa-square"></i> <span>Data Barang</span></a></li>
+            <li><a class="nav-link" href="/gudang"><i class="far fa-square"></i> <span>Data Gudang</span></a></li>
+            <li><a class="nav-link" href="/gudang"><i class="far fa-square"></i> <span>Data Transaksi Tambah Stok GA</span></a></li>
 
-            <li class="dropdown active">
+            <!-- <li class="dropdown active">
               <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
               <ul class="dropdown-menu">
                 <li class=active><a class="nav-link" href="index-0.html">General Dashboard</a></li>
@@ -408,7 +413,7 @@
                 <li><a class="nav-link" href="utilities-invoice.html">Invoice</a></li>
                 <li><a href="utilities-subscribe.html">Subscribe</a></li>
               </ul>
-            </li>            <li><a class="nav-link" href="credits.html"><i class="fas fa-pencil-ruler"></i> <span>Credits</span></a></li>
+            </li>            <li><a class="nav-link" href="credits.html"><i class="fas fa-pencil-ruler"></i> <span>Credits</span></a></li> -->
           </ul>
 
           <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
