@@ -16,8 +16,11 @@
 // });
 
 Auth::routes();
-
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/profile','HomeController@profile');
+Route::post('/profile/{id}','HomeController@updateprofile');
+
+
 
 // ============================ DATA SATUAN ==============================================
 Route::get('/satuan', 'SatuanController@index');
@@ -29,11 +32,25 @@ Route::post('/satuan/{id}', 'SatuanController@update');
 
 // ============================ DATA BARANG ==============================================
 Route::get('/barang', 'BarangController@index');
+Route::get('/barangs', 'BarangController@indexs');
+Route::get('/barangs/{id}', 'BarangController@details');
 Route::post('/barang', 'BarangController@insert');
 Route::delete('/barang/destroy/{id}',['uses' => 'BarangController@destroy']);
 Route::get('/barang/{id}/edit', 'BarangController@edit');
 Route::post('/barang/{id}', 'BarangController@update');
+Route::post('/barangs/{id}', 'BarangController@insertcart');
+Route::get('/cart', 'BarangController@carts');
+Route::delete('/cart/destroy/{id}',['uses' => 'BarangController@destroycart']);
+Route::get('/cart/{id}/edit', 'BarangController@editcart');
 
+Route::get('/datacart', 'BarangController@datacart');
+Route::post('/datacart/update', 'BarangController@datacartupdate');
+Route::post('/confirms', 'BarangController@confirms');
+Route::post('/cart/{id}', 'BarangController@updatecart');
+Route::get('/cartall', 'BarangController@cartsall');
+
+Route::get('/order-list', 'BarangController@orderlist');
+Route::get('/order-list/{id}', 'BarangController@detailorderlist');
 
 // ============================ DATA GUDANG ==============================================
 Route::get('/gudang', 'GudangController@index');
@@ -53,6 +70,9 @@ Route::post('/trans/{id}', 'TransController@update');
 
 Route::get('/transcab/{id}/editcab', 'TransController@editcab');
 Route::post('/transcab/{id}', 'TransController@updatecab');
+
+Route::get('/usecab/{id}/usecab', 'TransController@usecab');
+Route::post('/usecab/{id}', 'TransController@updateuse');
 
 
 

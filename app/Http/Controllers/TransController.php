@@ -99,6 +99,9 @@ class TransController extends Controller
         $monthnow = $querynow->month;
         $yearnow = $querynow->year;
 
+        $jmllama= $request->input('jmllama');
+        $jmlbaru= $request->input('jmlbaru');
+
             $id_gudang_brg = $data->id_gudang_brg;
             $id_barang = $data->id_barang;
             $pic = $data->pic;
@@ -109,7 +112,7 @@ class TransController extends Controller
             $insert->id_gudang_brg = $id_gudang_brg;
             $insert->id_barang = $id_barang;
             $insert->pic_beli = $pic;
-            $insert->jml_beli = $jml;
+            $insert->jml_beli = $jmlbaru;
             $insert->harga_beli = $harga;
             $insert->bulan_beli = $monthnow;
             $insert->tahun_beli = $yearnow;
@@ -117,8 +120,7 @@ class TransController extends Controller
             
             $trans = atk_gudang::find($id);
 
-            $jmllama= $request->input('jmllama');
-            $jmlbaru= $request->input('jmlbaru');
+            
             
             $jmlakhir = $jmlbaru+$jmllama;
 
@@ -134,7 +136,9 @@ class TransController extends Controller
 
     public function editcab($id)
     { 
-        
+        $pic = DB::table('atk_pics')
+        ->orderBy('id_pics','asc')->get();
+
         $query = DB::table('atk_gudangs')->where('pic','!=','GA')->orderBy('id_gudang_brg', 'DESC')->first();
 
         if($query){
@@ -156,24 +160,28 @@ class TransController extends Controller
         ->where('id_gudang_brg',$id)->first();
 
         
-        return view ('/app/stokkeluar', compact('data','all','id_barang'));
+        return view ('/app/stokkeluar', compact('data','all','id_barang','pic'));
     }
 
 
     public function updatecab(Request $request,$id)
     {
 
-        $data = DB::table('atk_gudangs')
-        ->where('id_gudang_brg',$id)->first();
+            $data = DB::table('atk_gudangs')
+            ->where('id_gudang_brg',$id)->first();
         
-        $querynow = Carbon::now();
-        $monthnow = $querynow->month;
-        $yearnow = $querynow->year;
-
+            $querynow = Carbon::now();
+            $monthnow = $querynow->month;
+            $yearnow = $querynow->year;
+        
+            $id_gudang_brgs= $request->input('id_gudang_brg');
             $pic= $request->input('pic');
+            $jmltersedia= $request->input('jmllama');
             $jmlkeluar= $request->input('jmlkeluar');
             $kd_barang= $request->input('kd_barang');
             $kd_barangcab= $request->input('kd_barangcab');
+            $min= $request->input('min');
+            $max= $request->input('max');
             $id_gudang_brg = $data->id_gudang_brg;
             $id_barang = $data->id_barang;
             $jml = $data->jml;
@@ -183,6 +191,8 @@ class TransController extends Controller
             ->where('id_barang',$kd_barang)
             ->where('pic',$pic)
             ->first();
+
+
             if($stokcab == NULL){
             $insert = new atk_gudang;
             $insert->id_gudang_brg = $kd_barangcab;
@@ -190,27 +200,124 @@ class TransController extends Controller
             $insert->pic = $pic;
             $insert->jml = $jmlkeluar;
             $insert->harga = $harga;
+            $insert->min = $min;
+            $insert->max = $max;
             $insert->save();
             }else{
-                
 
+                $trans = atk_gudang::find($stokcab->id_gudang_brg);
+                $jmlawal = $trans->jml;
+                $total = $jmlawal+$jmlkeluar;
+
+                $trans->jml = $total;
+                $trans->min = $min;
+                $trans->max = $max;
+                
+                $trans->save();
 
             }
 
-            $trans = atk_gudang::find($id);
+            $transtotal = atk_gudang::find($id_gudang_brgs);
+            $totalbarang = $jmltersedia-$jmlkeluar;
 
-           
+            $transtotal->jml = $totalbarang;
             
-            $jmlakhir = $jmlbaru+$jmllama;
+            $transtotal->save();
 
-            $trans->jml = $jmlakhir;
-            $trans->save();
+            $querys = DB::table('atk_gudangs')->where('pic','!=','GA')->orderBy('id_gudang_brg', 'DESC')->first();
+
+            $a=$querys->id_gudang_brg;
+            $inserttambah = new atk_tambah;
+            $inserttambah->id_gudang_brg = $a;
+            $inserttambah->id_barang = $id_barang;
+            $inserttambah->pic_beli = $pic;
+            $inserttambah->jml_beli = $jmlkeluar;
+            $inserttambah->harga_beli = $harga;
+            $inserttambah->bulan_beli = $monthnow;
+            $inserttambah->tahun_beli = $yearnow;
+            $inserttambah->save();
+
 
             Session::flash('success_massage','Berhasil disimpan.');
             return redirect('/trans');
 
 
     }
+    public function usecab($id)
+    { 
+        $pic = DB::table('atk_pics')
+        ->orderBy('id_pics','asc')->get();
 
+        $query = DB::table('atk_gudangs')->where('pic','!=','GA')->orderBy('id_gudang_brg', 'DESC')->first();
+
+        if($query){
+            $a=substr($query->id_gudang_brg, 3, 4);
+            $last=$a+1;
+            $id_barang="GK-$last";
+
+        }else{
+            $id_barang="GK-1";
+        }
+
+
+        $all = DB::table('atk_gudangs')
+        ->join('atk_barangs','atk_gudangs.id_barang','=','atk_barangs.id_barang')
+        ->orderBy('atk_gudangs.id_gudang_brg','asc')->get();
+
+        $data = DB::table('atk_gudangs')
+        ->join('atk_barangs','atk_gudangs.id_barang','=','atk_barangs.id_barang')
+        ->where('id_gudang_brg',$id)->first();
+
+        
+        return view ('/app/pemakaian', compact('data','all','id_barang','pic'));
+    }
+
+
+    public function updateuse(Request $request,$id)
+    {
+
+            $data = DB::table('atk_gudangs')
+            ->where('id_gudang_brg',$id)->first();
+        
+            $querynow = Carbon::now();
+            $monthnow = $querynow->month;
+            $yearnow = $querynow->year;
+        
+            $id_gudang_brgs= $request->input('id_gudang_brg');
+            $keterangan= $request->input('keterangan');
+            $jmltersedia= $request->input('jmllama');
+            $jmlkeluar= $request->input('jmlkeluar');
+            $kd_barang= $request->input('kd_barang');
+            $kd_barangcab= $request->input('kd_barangcab');
+
+            $id_gudang_brg = $data->id_gudang_brg;
+            $id_barang = $data->id_barang;
+            $jml = $data->jml;
+            $harga = $data->harga;
+
+            $trans = atk_gudang::find($id_gudang_brgs);
+            $jmlawal = $trans->jml;
+            $total = $jmlawal-$jmlkeluar;
+
+            $trans->jml = $total;
+            
+            $trans->save();
+            
+            $insert = new atk_pemakaian;
+            $insert->id_gudang_brg = $id_gudang_brgs;
+            $insert->jml_pemakaian = $jmlkeluar;
+            $insert->harga_pemakaian = $data->harga;
+            $insert->ket_pemakaian = $keterangan;
+            $insert->bln_pemakaian = $monthnow;
+
+            $insert->save();
+           
+
+
+            Session::flash('success_massage','Berhasil disimpan.');
+            return redirect('/trans');
+
+
+    }
 
 }

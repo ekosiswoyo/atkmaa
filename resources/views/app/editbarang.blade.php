@@ -39,6 +39,7 @@
                                         <div class="form-group">
                                         <label>Satuan</label>
                                         <select class="form-control select2" name="id_satuan">
+                                        <option value="{{$barangs->id_satuan}}">{{$barangs->id_satuan}} ( {{$barangs->nm_satuan}} ) </option>
                                         <option> -- PILIH SATUAN --</option>
                                             @foreach($satuan as $satuans)
                                             <option value="{{$satuans->id_satuan}}">{{$satuans->id_satuan}} ( {{$satuans->nm_satuan}} )</option>

@@ -31,11 +31,13 @@ class GudangController extends Controller
         $data = DB::table('atk_gudangs')
                 ->join('atk_barangs','atk_gudangs.id_barang','=','atk_barangs.id_barang')
                 ->orderBy('atk_gudangs.id_gudang_brg','asc')->get();
+        $pic = DB::table('atk_pics')
+        ->orderBy('id_pics','asc')->get();
         $barang = DB::table('atk_barangs')
             ->orderBy('atk_barangs.id_barang','asc')->get();
 
 
-        return view('/app/gudang', compact('id_gudang_brg','data','barang'));
+        return view('/app/gudang', compact('id_gudang_brg','data','barang','pic'));
     }
 
     public function insert(Request $request)
@@ -67,6 +69,10 @@ class GudangController extends Controller
 
     public function edit($id)
     { 
+        $pic = DB::table('atk_pics')
+        ->orderBy('id_pic','asc')->get();
+
+
         $data = DB::table('atk_gudangs')
         ->join('atk_barangs','atk_gudangs.id_barang','=','atk_barangs.id_barang')
         ->orderBy('atk_gudangs.id_gudang_brg','asc')->get();
@@ -79,7 +85,7 @@ class GudangController extends Controller
                 ->where('atk_gudangs.id_gudang_brg',$id)->first();
         
 
-      return view ('/app/editgudang', compact('gudang','barang','data'));
+      return view ('/app/editgudang', compact('gudang','barang','data','pic'));
     }
 
 

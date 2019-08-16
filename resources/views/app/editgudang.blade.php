@@ -45,7 +45,13 @@
 
                                         <div class="form-group">    
                                         <label>PIC</label>
-                                        <input type="text" class="form-control" placeholder="Masukkan PIC" name="pic"  value="{{$gudang->pic}}"  required>
+                                        <select class="form-control select2"  name="pic" required >
+                                        <option value="{{$gudang->pic}}">{{$gudang->pic}}</option>
+                                        <option> -- PILIH PIC --</option>
+                                            @foreach($pic as $pics)
+                                            <option value="{{$pics->nm_pic}}">{{$pics->nm_pic}}</option>
+                                            @endforeach
+                                        </select>
                                         </div>
 
                                         
@@ -67,23 +73,23 @@
 
                                         <div class="form-group">    
                                         <label>Jumlah Barang</label>
-                                        <input type="text" class="form-control" placeholder="Masukkan Jumlah Barang" name="jml"  value="{{$gudang->jml}}"  required>
+                                        <input type="number" class="form-control" placeholder="Masukkan Jumlah Barang" name="jml"  value="{{$gudang->jml}}"  required>
                                         </div>
 
                                         <div class="form-group">    
                                         <label>Harga Barang</label>
-                                        <input type="text" class="form-control" placeholder="Masukkan Harga Barang" name="harga"  value="{{$gudang->harga}}"  required>
+                                        <input type="number" class="form-control" placeholder="Masukkan Harga Barang" name="harga"  value="{{$gudang->harga}}"  required>
                                         </div>
 
                                         <div class="form-group">    
                                         <label>Buffer MIN</label>
-                                        <input type="text" class="form-control" placeholder="Masukkan Buffer MIN" name="min"  value="{{$gudang->min}}" required>
+                                        <input type="number" class="form-control" placeholder="Masukkan Buffer MIN" name="min"  value="{{$gudang->min}}" required>
                                         </div>
 
 
                                         <div class="form-group">    
                                         <label>Buffer MAX</label>
-                                        <input type="text" class="form-control" placeholder="Masukkan Buffer MAX" name="max"  value="{{$gudang->max}}" required>
+                                        <input type="number" class="form-control" placeholder="Masukkan Buffer MAX" name="max"  value="{{$gudang->max}}" required>
                                         </div>
 
                                         

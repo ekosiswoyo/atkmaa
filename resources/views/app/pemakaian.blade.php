@@ -14,23 +14,75 @@
                 </div>
 
                 <div class="section-body">
-                    <h2 class="section-title">Data Transaksi</h2>
+                    <h2 class="section-title">Data Transaksi Pemakaian Cabang</h2>
                     <!-- <p class="section-lead">Silahkan Masukkan Detail Nama Barang dan Satuannya yang nantinya digunakan untuk data barang.</p> -->
 
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="card">
-                                @if($querysql != NULL)
-                                    @if($querysql->bulan != $monthnow AND $querysql->tahun != $monthnow)
-                                    <form action="/trans/copyall" method="post" role="form">
+                                <form action="/usecab/{{$data->id_gudang_brg}}" method="post" role="form">
                                         {{csrf_field()}}
-                                    <div class="buttons">
-                                        <button class="btn btn-info">COPY STOK AWAL BULAN</button>
-                                    </div>
-                                    </form>
-                                    @else
                                     <div class="row">
+                                     
+                                    <div class="col-6">
+                                        <div class="card">
+                                        <div class="form-group">    
+                                            <label>Kode Barang</label>
+                                            <input type="hidden" class="form-control" name="id_gudang_brg"  value="{{$data->id_gudang_brg}}" >
+                                            <input type="text" class="form-control" name="kd_barang"  value="{{$data->id_barang}}"  readonly>
+                                        </div>
+                                        
+                                        
+                                        </div>  
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="card">
+                                        <div class="form-group">    
+                                            <label>Kode Gudang Cabang</label>
+                                            <input type="text" class="form-control" name="kd_barangcab" value="{{$id_barang}}" readonly>
+                                        </div>
+                                        </div>
+                                        
+                                    </div>
                                     
+                                    
+                                    <div class="col-3">
+                                        <div class="card">
+                                        <div class="form-group">    
+                                        <label>Keterangan Pemakaian</label>
+                                        <textarea class="form-control" name="keterangan" required></textarea>
+                                       
+                                        </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="card">
+                                        <div class="form-group">    
+                                            <label>Jumlah Stok Tersedia</label>
+                                            <input type="text" class="form-control" name="jmllama"  value="{{$data->jml}}"  readonly>
+                                        </div>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    <div class="col-6">
+                                        <div class="card">
+                                        <div class="form-group">    
+                                            <label>Jumlah Stok Keluar</label>
+                                            <input type="text" class="form-control" placeholder="Jumlah Stok Keluar" name="jmlkeluar"  >
+                                        </div>
+                                        </div>
+                                        
+                                    </div>
+
+                                    <div class="buttons">
+                                        <button class="btn btn-primary">Simpan</button>
+                                    </div>
+</div>
+</form>
+<div class="row">
+
                                     <div class="col-12">
                                         <div class="card">
                                             <div class="card-header">
@@ -39,7 +91,7 @@
                                             <div class="card-body">
                                                 <div class="table-responsive">
                                                 <table class="table table-striped" id="table-1">
-                                                    <thead>                                 
+                                                <thead>                                 
                                                     <tr>
                                                         <th >
                                                         #
@@ -54,7 +106,7 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    @foreach ($data as $datas)                                 
+                                                    @foreach ($all as $datas)                                 
                                                     <tr>
                                                         <td>{{$datas->id_gudang_brg}}</td>
                                                         <td>{{$datas->nm_barang}}</td>
@@ -64,7 +116,7 @@
                                                         <td>{{$datas->min}}</td>
                                                         <td>{{$datas->max}}</td>
                                                         
-                                                        <td><a href="/trans/{{$datas->id_gudang_brg}}/edit"><button type="button" class="btn btn-info">TAMBAH STOK</button></a>&nbsp;<a href="/transcab/{{$datas->id_gudang_brg}}/editcab"><button type="button" class="btn btn-warning">STOK KELUAR</button></a>&nbsp;<a href="/usecab/{{$datas->id_gudang_brg}}/usecab"><button type="button" class="btn btn-warning">PEMAKAIAN</button></a></td>
+                                                        <td><a href="/trans/{{$datas->id_gudang_brg}}/edit"><button type="button" class="btn btn-info">STOK MASUK</button></a></td>
                                                     </tr>
                                                     @endforeach
                                                 
@@ -75,17 +127,6 @@
                                         </div>
                                 </div>
                                 </div>
-                                    @endif
-                                @else
-                                    <form action="/trans/copyall" method="post" role="form">
-                                        {{csrf_field()}}
-                                    <div class="buttons">
-                                        <button class="btn btn-info">COPY STOK AWAL BULAN</button>
-                                    </div>
-                                    </form>
-                                    
-
-                                    @endif
                                 </div>
                             </div>
                             

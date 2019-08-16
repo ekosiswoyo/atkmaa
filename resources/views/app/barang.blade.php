@@ -24,7 +24,7 @@
                                     <div class="card-header">
                                         <h4>Input Data</h4>
                                     </div>
-                                    <form action="" method="post" role="form">
+                                    <form action="" method="post" role="form" enctype="multipart/form-data" >
                                         {{csrf_field()}}
                                     <div class="card-body">
                                         <div class="form-group">    
@@ -45,6 +45,12 @@
                                             <option value="{{$satuans->id_satuan}}">{{$satuans->id_satuan}} ( {{$satuans->nm_satuan}} )</option>
                                             @endforeach
                                         </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label class="control-label">Foto Barang</label>                                                    
+                                              
+                                                  <input type="file" id="foto" name="foto">
                                         </div>
 
                                     </div>

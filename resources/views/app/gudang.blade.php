@@ -35,7 +35,7 @@
                                         <div class="form-group">
                                         <label>Nama Barang</label>
                                         <select class="form-control select2" name="id_barang">
-                                        <option> -- PILIH SATUAN --</option>
+                                        <option> -- PILIH BARANG --</option>
                                             @foreach($barang as $barangs)
                                             <option value="{{$barangs->id_barang}}">{{$barangs->id_barang}} ( {{$barangs->nm_barang}} )</option>
                                             @endforeach
@@ -44,7 +44,12 @@
 
                                         <div class="form-group">    
                                         <label>PIC</label>
-                                        <input type="text" class="form-control" placeholder="Masukkan PIC" name="pic" required>
+                                        <select class="form-control select2"  name="pic" required >
+                                        <option> -- PILIH PIC --</option>
+                                            @foreach($pic as $pics)
+                                            <option value="{{$pics->nm_pic}}">{{$pics->nm_pic}}</option>
+                                            @endforeach
+                                        </select>
                                         </div>
 
                                         
@@ -66,23 +71,23 @@
 
                                         <div class="form-group">    
                                         <label>Jumlah Barang</label>
-                                        <input type="text" class="form-control" placeholder="Masukkan Jumlah Barang" name="jml" required>
+                                        <input type="number" class="form-control" placeholder="Masukkan Jumlah Barang" name="jml" required>
                                         </div>
 
                                         <div class="form-group">    
                                         <label>Harga Barang</label>
-                                        <input type="text" class="form-control" placeholder="Masukkan Harga Barang" name="harga" required>
+                                        <input type="number" class="form-control" placeholder="Masukkan Harga Barang" name="harga" required>
                                         </div>
 
                                         <div class="form-group">    
                                         <label>Buffer MIN</label>
-                                        <input type="text" class="form-control" placeholder="Masukkan Buffer MIN" name="min" required>
+                                        <input type="number" class="form-control" placeholder="Masukkan Buffer MIN" name="min" required>
                                         </div>
 
 
                                         <div class="form-group">    
                                         <label>Buffer MAX</label>
-                                        <input type="text" class="form-control" placeholder="Masukkan Buffer MAX" name="max" required>
+                                        <input type="number" class="form-control" placeholder="Masukkan Buffer MAX" name="max" required>
                                         </div>
 
                                         

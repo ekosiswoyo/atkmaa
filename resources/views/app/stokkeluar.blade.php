@@ -20,7 +20,7 @@
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="card">
-                                <form action="/trans/{{$data->id_gudang_brg}}" method="post" role="form">
+                                <form action="/transcab/{{$data->id_gudang_brg}}" method="post" role="form">
                                         {{csrf_field()}}
                                     <div class="row">
                                      
@@ -28,7 +28,8 @@
                                         <div class="card">
                                         <div class="form-group">    
                                             <label>Kode Barang</label>
-                                            <input type="text" class="form-control" name="kd_barang"  value="{{$data->id_barang}} - {{$data->nm_barang}}"  readonly>
+                                            <input type="hidden" class="form-control" name="id_gudang_brg"  value="{{$data->id_gudang_brg}}" >
+                                            <input type="text" class="form-control" name="kd_barang"  value="{{$data->id_barang}}"  readonly>
                                         </div>
                                         
                                         
@@ -44,11 +45,17 @@
                                         
                                     </div>
                                     
+                                    
                                     <div class="col-3">
                                         <div class="card">
                                         <div class="form-group">    
-                                            <label>PIC</label>
-                                            <input type="text" class="form-control" name="pic">
+                                        <label>PIC</label>
+                                        <select class="form-control select2"  name="pic" required >
+                                        <option> -- PILIH PIC --</option>
+                                            @foreach($pic as $pics)
+                                            <option value="{{$pics->nm_pic}}">{{$pics->nm_pic}}</option>
+                                            @endforeach
+                                        </select>
                                         </div>
                                         </div>
                                         
@@ -68,6 +75,24 @@
                                         <div class="form-group">    
                                             <label>Jumlah Stok Keluar</label>
                                             <input type="text" class="form-control" placeholder="Jumlah Stok Keluar" name="jmlkeluar"  >
+                                        </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="card">
+                                        <div class="form-group">    
+                                            <label>Buffer Min</label>
+                                            <input type="text" class="form-control" placeholder="Buffer Min" name="min"  >
+                                        </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="card">
+                                        <div class="form-group">    
+                                            <label>Buffer Max</label>
+                                            <input type="text" class="form-control" placeholder="Buffer Max" name="max"  >
                                         </div>
                                         </div>
                                         
