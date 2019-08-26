@@ -23,7 +23,7 @@
                                     <div class="card-header">
                                         <h4>Edit Data</h4>
                                     </div>
-                                    <form action="/barang/{{$barangs->id_barang}}" method="post" role="form">
+                                    <form action="/barang/{{$barangs->id_barang}}" method="post" role="form" enctype="multipart/form-data" >
                                         {{csrf_field()}}
                                     <div class="card-body">
                                         <div class="form-group">    
@@ -45,6 +45,37 @@
                                             <option value="{{$satuans->id_satuan}}">{{$satuans->id_satuan}} ( {{$satuans->nm_satuan}} )</option>
                                             @endforeach
                                         </select>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                        <label>Harga</label>
+                                        <input type="text" class="form-control" placeholder="Masukkan Harga Barang" name="harga" value="{{$barangs->harga}}" id="rupiah" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                        <label>Buffer Min GA</label>
+                                        <input type="number" class="form-control" placeholder="Masukkan Buffer Minimal GA" name="min_ga" value="{{$barangs->min_ga}}" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                        <label>Buffer Max GA</label>
+                                        <input type="number" class="form-control" placeholder="Masukkan Buffer Maximal GA" name="max_ga" value="{{$barangs->max_ga}}" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                        <label>Buffer Min Cabang</label>
+                                        <input type="number" class="form-control" placeholder="Masukkan Buffer Minimal Cabang" name="min_cab" value="{{$barangs->min_cab}}" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                        <label>Buffer Max Cabang</label>
+                                        <input type="number" class="form-control" placeholder="Masukkan Buffer Minimal Cabang" name="max_cab" value="{{$barangs->max_cab}}" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label class="control-label">Foto Barang</label>                                                    
+                                              
+                                                  <input type="file" id="foto" name="foto">
                                         </div>
 
                                     </div>
@@ -100,6 +131,34 @@
 @endsection
 
 @section('script')
+
+<script type="text/javascript">
+		
+		var rupiah = document.getElementById('rupiah');
+		rupiah.addEventListener('keyup', function(e){
+			// tambahkan 'Rp.' pada saat form di ketik
+			// gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+			rupiah.value = formatRupiah(this.value, '');
+		});
+ 
+		/* Fungsi formatRupiah */
+		function formatRupiah(angka, prefix){
+			var number_string = angka.replace(/[^,\d]/g, '').toString(),
+			split   		= number_string.split(','),
+			sisa     		= split[0].length % 3,
+			rupiah     		= split[0].substr(0, sisa),
+			ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+ 
+			// tambahkan titik jika yang di input sudah menjadi angka ribuan
+			if(ribuan){
+				separator = sisa ? '.' : '';
+				rupiah += separator + ribuan.join('.');
+			}
+ 
+			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+			return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
+		}
+	</script>
 <script>
         $.ajaxSetup({
             headers: {

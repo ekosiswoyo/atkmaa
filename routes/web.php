@@ -46,11 +46,15 @@ Route::get('/cart/{id}/edit', 'BarangController@editcart');
 Route::get('/datacart', 'BarangController@datacart');
 Route::post('/datacart/update', 'BarangController@datacartupdate');
 Route::post('/confirms', 'BarangController@confirms');
+
+Route::post('/confirmsorder', 'BarangController@confirmsorder');
 Route::post('/cart/{id}', 'BarangController@updatecart');
 Route::get('/cartall', 'BarangController@cartsall');
 
 Route::get('/order-list', 'BarangController@orderlist');
 Route::get('/order-list/{id}', 'BarangController@detailorderlist');
+Route::get('/order/{status}/{date}/{id}', 'BarangController@detailorderpic');
+Route::post('/order/update', 'BarangController@updateorder');
 
 // ============================ DATA GUDANG ==============================================
 Route::get('/gudang', 'GudangController@index');
@@ -58,6 +62,8 @@ Route::post('/gudang', 'GudangController@insert');
 Route::delete('/gudang/destroy/{id}',['uses' => 'GudangController@destroy']);
 Route::get('/gudang/{id}/edit', 'GudangController@edit');
 Route::post('/gudang/{id}', 'GudangController@update');
+Route::get('/data', 'GudangController@databarang');
+
 
 
 // ============================ DATA TRANSAKSI TAMBAH STOK GA==============================================
@@ -73,6 +79,9 @@ Route::post('/transcab/{id}', 'TransController@updatecab');
 
 Route::get('/usecab/{id}/usecab', 'TransController@usecab');
 Route::post('/usecab/{id}', 'TransController@updateuse');
+
+Route::get('/cabang/{id}/use', 'TransController@cabanguse');
+Route::post('/cabang/{id}', 'TransController@cabangupdate');
 
 
 

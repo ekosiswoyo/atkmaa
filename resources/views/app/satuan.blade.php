@@ -58,8 +58,9 @@
                               #
                             </th>
                             <th>Nama Satuan</th>
-                            <th>Tanggal</th>
-                            <th>Action</th>
+                            <!-- <th>Tanggal</th> -->
+                            <th>Edit</th>
+                            <th>Delete</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -67,9 +68,10 @@
                           <tr>
                             <td>{{$datas->id_satuan}}</td>
                             <td>{{$datas->nm_satuan}}</td>
-                            <td>{{date('d-m-Y', strtotime($datas->created_at))}}</td>
+                            <!-- <td>{{date('d-m-Y', strtotime($datas->created_at))}}</td> -->
                             <td><a href="/satuan/{{$datas->id_satuan}}/edit"><button type="button" class="btn btn-info">Edit</button></a>
-                            <button class="btn btn-warning" onClick="deleteData('{{$datas->id_satuan}}')"  data-id=" {{$datas->id_satuan}}"  >Delete</button></td>
+                            </td>
+                            <td><button class="btn btn-warning" onClick="deleteData('{{$datas->id_satuan}}')"  data-id=" {{$datas->id_satuan}}"  >Delete</button></td>
                           </tr>
                         @endforeach
                           

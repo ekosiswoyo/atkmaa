@@ -20,14 +20,25 @@ class SatuanController extends Controller
 
         $query = DB::table('atk_satuans')->orderBy('id_satuan', 'DESC')->first();
 
-        if($query){
-            $a=substr($query->id_satuan, 3, 4);
-            $last=$a+1;
-            $id_satuan="ST-$last";
+     
+       
+        if($query != NULL){
+            $a=substr($query->id_satuan, 2, 3);
+            $b = $a + 1;
+    
+            if($b < 10){
+                $id_satuan="ST00$b";
+            }else if($b < 100){
+                $id_satuan = "ST0$b";
+            }else{
+                $id_satuan = "ST$b";
+            }
+            
 
         }else{
-            $id_satuan="ST-1";
+            $id_satuan="ST001";
         }
+
 
         $data = DB::table('atk_satuans')
             ->orderBy('atk_satuans.id_satuan','asc')->get();

@@ -11,6 +11,8 @@ use App\Model\atk_awal;
 use App\Model\atk_tambah;
 use App\Model\atk_pemakaian;
 use Carbon\Carbon;
+use Auth;
+
 use Session;
 
 class TransController extends Controller
@@ -316,6 +318,86 @@ class TransController extends Controller
 
             Session::flash('success_massage','Berhasil disimpan.');
             return redirect('/trans');
+
+
+    }
+
+
+    public function cabanguse($id)
+    { 
+        $pic = DB::table('atk_pics')
+        ->orderBy('id_pics','asc')->get();
+
+        $query = DB::table('atk_gudangs')->where('pic','!=','GA')->orderBy('id_gudang_brg', 'DESC')->first();
+
+        if($query){
+            $a=substr($query->id_gudang_brg, 3, 4);
+            $last=$a+1;
+            $id_barang="GK-$last";
+
+        }else{
+            $id_barang="GK-1";
+        }
+
+     
+        $all = DB::table('atk_gudangs')
+        ->join('atk_barangs','atk_gudangs.id_barang','=','atk_barangs.id_barang')
+        ->where('atk_gudangs.pic','=',Auth::user()->id_pics)
+        ->orderBy('atk_gudangs.id_gudang_brg','asc')->get();
+
+        $data = DB::table('atk_gudangs')
+        ->join('atk_barangs','atk_gudangs.id_barang','=','atk_barangs.id_barang')
+        ->where('id_gudang_brg',$id)->first();
+
+        
+        return view ('/app/cabanguse', compact('data','all','id_barang','pic'));
+    }
+
+
+    public function cabangupdate(Request $request,$id)
+    {
+
+            $data = DB::table('atk_gudangs')
+            ->where('id_gudang_brg',$id)->first();
+        
+            $querynow = Carbon::now();
+            $monthnow = $querynow->month;
+            $yearnow = $querynow->year;
+        
+            $id_gudang_brgs= $request->input('id_gudang_brg');
+            $keterangan= $request->input('keterangan');
+            $jmltersedia= $request->input('jmllama');
+            $jmlkeluar= $request->input('jmlkeluar');
+            $kd_barang= $request->input('kd_barang');
+
+            $id_gudang_brg = $data->id_gudang_brg;
+            $id_barang = $data->id_barang;
+            $jml = $data->jml;
+            $harga = $data->harga;
+
+            $trans = atk_gudang::find($id_gudang_brgs);
+            $jmlawal = $trans->jml;
+            $total = $jmlawal-$jmlkeluar;
+
+            $trans->jml = $total;
+            
+            $trans->save();
+            
+            $insert = new atk_pemakaian;
+            $insert->id_gudang_brg = $id_gudang_brgs;
+            $insert->jml_pemakaian = $jmlkeluar;
+            $insert->harga_pemakaian = $data->harga;
+            $insert->ket_pemakaian = $keterangan;
+            $insert->bln_pemakaian = $monthnow;
+            $insert->thn_pemakaian = $yearnow;
+
+
+            $insert->save();
+           
+
+
+            Session::flash('success_massage','Berhasil disimpan.');
+            return redirect('/data');
 
 
     }

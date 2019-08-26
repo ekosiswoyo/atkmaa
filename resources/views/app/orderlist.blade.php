@@ -53,6 +53,7 @@
                             </th>
                             
                             <th>Status</th>
+                            <!-- <th>Konfirmasi</th> -->
                             <!-- <th>Aksi</th> -->
                           </tr>
                         </thead>
@@ -62,20 +63,28 @@
                             
                             <td>{{$datas->dates}}</td>
                             @if($datas->status == '1')
-                            <td><div class="badge badge-warning">Menunggu Konfirmasi </div></td>
+                            <td><div class="badge badge-warning">Pesanan di Proses</div></td>
                             @elseif($datas->status == '2')
-                            <td><div class="badge badge-danger">Pesanan di Proses</div></td>
+                            <td><div class="badge badge-danger">Pesanan Siap di Ambil / di Kirim</div></td>
                             @elseif($datas->status == '3')
-                            <td><div class="badge badge-info">Pesanan Siap di Ambil / di Kirim</div></td>
-                            @elseif($datas->status == '4')
-                            <td><div class="badge badge-primary">Pesanan Selesai!</div></td>
+                            <td><div class="badge badge-info">Pesanan Selesai!</div></td>
+                            
                             @endif
+                            @if($datas->status == '2')
+                            <td> <form action="/confirmsorder" method="post" role="form">
+                                        {{csrf_field()}}
+                                        <button type="submit" class="btn btn-primary">PESANAN DITERIMA</button>
+                  
+                      </form></td>
+                      @endif
                             <!-- <td><a href="/order-list/{{$datas->dates}}"><button type="button" class="btn btn-danger">Detail</button></a>
                             </td> -->
                           </tr>
                         @endforeach
                         </tbody>
                       </table> 
+                     
+                      
                       
 <!--                      
                       <form action="/confirms" method="post" role="form">

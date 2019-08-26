@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Model\atk_gudang;
+use Carbon\Carbon;
+
+
+use Auth;
 use Session;
 
 class GudangController extends Controller
@@ -120,5 +124,30 @@ class GudangController extends Controller
             'message' => 'Contact Deleted'
         ]);
         
+    }
+
+    public function databarang()
+    {
+        
+        
+        $querysql = DB::table('atk_awals')
+            ->orderBy('atk_awals.id_atk_awal','desc')->first();
+
+        $querynow = Carbon::now();
+        $id_pic = Auth::User()->id_pics;
+        
+        $monthnow = $querynow->month;
+        $yearnow = $querynow->year;
+
+        $pic = DB::table('atk_pics')->where('id_pics','=',$id_pic)->first();
+
+        $data = DB::table('atk_gudangs')
+        ->join('atk_barangs','atk_gudangs.id_barang','=','atk_barangs.id_barang')
+        ->where('atk_gudangs.pic','=',$id_pic)
+        ->orderBy('atk_gudangs.id_gudang_brg','asc')->get();
+
+        
+
+        return view('/app/datagudang', compact('querysql','querynow','monthnow','yearnow','data','pic'));
     }
 }
