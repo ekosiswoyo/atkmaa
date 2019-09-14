@@ -8,23 +8,25 @@
 
           <div class="card"  style="width:100%;">
                   <div class="card-header">
-                    <h4>Data Barang {{$pic->nm_pic}}</h4>
+                    <h4>Data Barang {{$pics->nm_pic}}</h4>
                   </div>
                   <div class="card-body">
-
-                  <div class="row">               
+                <div class="row">
                   <div class="form-group col-md-6">
-                  <select class="form-control select2" name="id_satuan" onchange="location = this.value;">
+                    <select class="form-control select2" name="id_satuan" onchange="location = this.value;">
                     <option> -- PILIH CABANG / BAGIAN --</option>
+                      <option value="/data">ALL</option>
                        @foreach($datapics as $pic)
                       <option value="/data/{{$pic->id_pics}}">{{$pic->nm_pic}}</option>
                       @endforeach
                     </select>
                   </div>
-                  <div class="col-md-6">
-                  <a href="/datas/prints"><button type="submit" class="btn btn-info">PRINT DATA ALL</button></a>
+
+                  <div class="form-group col-md-6">
+                  <a href="/data/print/{{$pics->id_pics}}"><button type="submit" class="btn btn-info">PRINT DATA</button></a>&nbsp;<a href="/datas/prints"><button type="submit" class="btn btn-light">PRINT DATA ALL</button></a>
                   </div>
-                  </div>
+                  
+                </div>
 
 
                     <div class="table-responsive">
@@ -36,7 +38,6 @@
                                                         </th>
                                                         <th>Nama Barang</th>
                                                         <th>Foto</th>
-                                                        <th>PIC</th>
                                                         <th>Jumlah</th>
                                                         <th>Harga</th>
                                                         <th>Buffer Min</th>
@@ -49,14 +50,11 @@
                                                     <tr>
                                                         <td>{{$datas->id_barang}}</td>
                                                         <td>{{$datas->nm_barang}}</td>
-                                                        
                                                         @if($datas->foto != NULL)
                                                             <td><img src="{{asset('storage/lampiran/' . $datas->foto)}}" style="width:70px;height:70px;border-radius:15px;border:3px solid #E51414;"></td>
                                                             @else
                                                             <td><img src="{{asset('storage/lampiran/notfound.jpg')}}" style="width:70px;height:70px;border-radius:15px;border:3px solid #E51414;"></td>
                                                             @endif
-                                                            
-                                                        <td>{{$datas->nm_pic}}</td>
                                                         <td>{{$datas->jml}}</td>
                                                         <td>Rp {{ number_format($datas->harga, 0) }}</td>
                                                         <td>{{$datas->min_cab}}</td>

@@ -100,11 +100,11 @@
                                                     <tbody>
                                                     @foreach ($all as $datas)                                 
                                                     <tr>
-                                                        <td>{{$datas->id_gudang_brg}}</td>
+                                                        <td>{{$datas->id_barang}}</td>
                                                         <td>{{$datas->nm_barang}}</td>
                                                         <td>{{$datas->pic}}</td>
                                                         <td>{{$datas->jml}}</td>
-                                                        <td>{{$datas->harga}}</td>
+                                                        <td>Rp {{ number_format($datas->harga, 0) }}</td>
                                                         <td>{{$datas->min_cab}}</td>
                                                         <td>{{$datas->max_cab}}</td>
                                                         

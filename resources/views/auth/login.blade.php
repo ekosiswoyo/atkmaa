@@ -98,11 +98,11 @@
                     <button type="submit" class="btn btn-danger btn-lg btn-block" tabindex="4">
                       Login
                     </button>
-                    @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
+                      @if (Route::has('password.request'))
+                        <a class="btn btn-link" href="{{ route('password.request') }}">
+                            {{ __('Forgot Your Password?') }}
+                        </a>
+                      @endif
                   </div>
                 </form>
               </div>

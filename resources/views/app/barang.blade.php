@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
       <!-- Main Content -->
     <div class="main-content">
         <section class="section">

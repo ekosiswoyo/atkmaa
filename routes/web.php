@@ -56,6 +56,9 @@ Route::get('/order-list/{id}', 'BarangController@detailorderlist');
 Route::get('/order/{status}/{date}/{id}', 'BarangController@detailorderpic');
 Route::post('/order/update', 'BarangController@updateorder');
 
+Route::get('/stockcab', 'BarangController@stockcab');
+Route::get('/addstockbarang', 'BarangController@addstockbarang');
+
 // ============================ DATA GUDANG ==============================================
 Route::get('/gudang', 'GudangController@index');
 Route::post('/gudang', 'GudangController@insert');
@@ -63,11 +66,24 @@ Route::delete('/gudang/destroy/{id}',['uses' => 'GudangController@destroy']);
 Route::get('/gudang/{id}/edit', 'GudangController@edit');
 Route::post('/gudang/{id}', 'GudangController@update');
 Route::get('/data', 'GudangController@databarang');
+Route::get('/data/{id}', 'GudangController@datacabang');
+Route::post('/addtogudang', 'GudangController@addtogudang');
+Route::get('/data/print/{id}', 'GudangController@makePDF');
+Route::get('/datas/prints', 'GudangController@PDFAll');
+Route::get('/lapbulstok', 'GudangController@lapbulstok');
+Route::post('/lapbulstok', 'GudangController@lapbulstokpost');
+Route::get('/lappemakaian', 'GudangController@lappemakaian');
+Route::post('/lappemakaian', 'GudangController@lappemakaianpost');
+Route::get('/cetaklapstokmasuk', 'GudangController@stokmasukPDF');
 
 
 
 // ============================ DATA TRANSAKSI TAMBAH STOK GA==============================================
 Route::get('/trans', 'TransController@index');
+Route::get('/addstock', 'TransController@addstock');
+Route::post('/trans/copystock', 'TransController@copystock');
+Route::post('/trans/stock', 'TransController@stock');
+Route::get('/transaksiall', 'TransController@transaksiall');
 // Route::get('/trans/{id}', 'TransController@all');
 
 Route::post('/trans/copyall', 'TransController@copyall');
@@ -82,6 +98,9 @@ Route::post('/usecab/{id}', 'TransController@updateuse');
 
 Route::get('/cabang/{id}/use', 'TransController@cabanguse');
 Route::post('/cabang/{id}', 'TransController@cabangupdate');
+
+Route::get('/cetak',  'TransController@makePDF');
+
 
 
 

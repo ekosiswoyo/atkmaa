@@ -35,7 +35,7 @@
                                         
                                         </div>  
                                     </div>
-                                    <div class="col-3">
+                                    <!-- <div class="col-3">
                                         <div class="card">
                                         <div class="form-group">    
                                             <label>Kode Gudang Cabang</label>
@@ -43,7 +43,7 @@
                                         </div>
                                         </div>
                                         
-                                    </div>
+                                    </div> -->
                                     
                                     
                                     <div class="col-3">
@@ -113,8 +113,8 @@
                                                         <td>{{$datas->pic}}</td>
                                                         <td>{{$datas->jml}}</td>
                                                         <td>{{$datas->harga}}</td>
-                                                        <td>{{$datas->min}}</td>
-                                                        <td>{{$datas->max}}</td>
+                                                        <td>{{$datas->min_cab}}</td>
+                                                        <td>{{$datas->max_cab}}</td>
                                                         
                                                         <td><a href="/trans/{{$datas->id_gudang_brg}}/edit"><button type="button" class="btn btn-info">STOK MASUK</button></a></td>
                                                     </tr>

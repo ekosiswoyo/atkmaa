@@ -236,21 +236,39 @@
       <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a href="index.html">BPR MAA</a>
+            <a href="/">BPR MAA</a>
           </div>
           <div class="sidebar-brand sidebar-brand-sm">
-            <a href="index.html">MAA</a>
+            <a href="/">MAA</a>
           </div>
           <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
             <li class="active"><a class="nav-link" href="/"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
+           @if(Auth::user()->id_pics != 1)
+           <li><a class="nav-link" href="/stockcab"><i class="fas fa-fire"></i> <span>Stok Barang Cetak</span></a></li>
+           <li><a class="nav-link" href="/stockatk"><i class="fas fa-fire"></i> <span>Stok ATK Cetak</span></a></li>
+           @endif
             @if(Auth::user()->id_pics == 1)
             <li class="menu-header">Data Master</li>
          
             <li><a class="nav-link" href="/satuan"><i class="far fa-square"></i> <span>Data Satuan</span></a></li>
             <li><a class="nav-link" href="/barang"><i class="far fa-square"></i> <span>Data Barang</span></a></li>
-            <li><a class="nav-link" href="/gudang"><i class="far fa-square"></i> <span>Data Gudang</span></a></li>
-            <li><a class="nav-link" href="/trans"><i class="far fa-square"></i> <span>Data Transaksi Tambah Stok GA</span></a></li>
+            <!-- <li><a class="nav-link" href="/gudang"><i class="far fa-square"></i> <span>Data Gudang</span></a></li> -->
+            <!-- <li><a class="nav-link" href="/trans"><i class="far fa-square"></i> <span>Data Transaksi Tambah Stok GA</span></a></li> -->
+            <li class="menu-header">Data Transaksi</li>
+           
+           <li><a class="nav-link" href="/addstock"><i class="far fa-square"></i> <span>Tambah Stok Gudang</span></a></li>
+           <li><a class="nav-link" href="/transaksiall"><i class="far fa-square"></i> <span>Daftar Transaksi</span></a></li>
+           <li><a class="nav-link" href="/data"><i class="far fa-square"></i> <span>Data Stok Cabang</span></a></li>
+          
+           <li class="menu-header">Laporan</li>
+            <li class="dropdown">
+              <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Cetak Laporan</span></a>
+              <ul class="dropdown-menu">
+              <li><a class="nav-link" href="/lapbulstok">Cetak Laporan Bulanan</a></li>
+              <li><a class="nav-link" href="/lappemakaian">Cetak Laporan Pemakaian</a></li>
+              </ul>
+            </li>
             @endif
 
             <!-- <li class="dropdown active">

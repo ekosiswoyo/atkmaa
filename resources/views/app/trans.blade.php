@@ -47,9 +47,6 @@
                                                         <th>Nama Barang</th>
                                                         <th>PIC</th>
                                                         <th>Jumlah</th>
-                                                        <th>Harga</th>
-                                                        <th>Buffer Min</th>
-                                                        <th>Buffer Max</th>
                                                         <th>Action</th>
                                                     </tr>
                                                     </thead>
@@ -60,9 +57,6 @@
                                                         <td>{{$datas->nm_barang}}</td>
                                                         <td>{{$datas->pic}}</td>
                                                         <td>{{$datas->jml}}</td>
-                                                        <td>{{$datas->harga}}</td>
-                                                        <td>{{$datas->min}}</td>
-                                                        <td>{{$datas->max}}</td>
                                                         
                                                         <td><a href="/trans/{{$datas->id_gudang_brg}}/edit"><button type="button" class="btn btn-info">TAMBAH STOK</button></a>&nbsp;<a href="/transcab/{{$datas->id_gudang_brg}}/editcab"><button type="button" class="btn btn-warning">STOK KELUAR</button></a>&nbsp;<a href="/usecab/{{$datas->id_gudang_brg}}/usecab"><button type="button" class="btn btn-warning">PEMAKAIAN</button></a></td>
                                                     </tr>

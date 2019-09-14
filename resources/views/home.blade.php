@@ -81,17 +81,18 @@
                   <input type="hidden" value="{{$querys->id_barang}}">
                     @if($querys->foto != NULL)
                     <center><div class="card-header">
-                        <a href="/barangs/{{$querys->id_barang}}"><img src="{{asset('storage/lampiran/' . $querys->foto)}}" style="width:80%;height:80%;border-radius:15px;border:3px solid #E51414;"></a>
+                        <a href="/barangs/{{$querys->id_barang}}"><img src="{{asset('storage/lampiran/' . $querys->foto)}}" style="width:170px;height:170px;border-radius:15px;border:3px solid #E51414;"></a>
 
                     </div> </center>
                     @else
                     <center> <div class="card-header">
-                    <a href="/barangs/{{$querys->id_barang}}"><img src="{{asset('storage/lampiran/notfound.jpg')}}" style="width:80%;height:80%;border-radius:15px;border:3px solid #E51414;"></a>
+                    <a href="/barangs/{{$querys->id_barang}}"><img src="{{asset('storage/lampiran/notfound.jpg')}}" style="width:170px;height:170px;border-radius:15px;border:3px solid #E51414;"></a>
 
                     </div> </center>
                     @endif
                     
-                    <center> <a href="/barangs/{{$querys->id_barang}}" style="text-decoration:none;font-family:arial;color:black;">{{$querys->nm_barang}}</a></center>
+                    <center> <a href="/barangs/{{$querys->id_barang}}" style="text-decoration:none;font-family:arial;color:black;">{{$querys->nm_barang}}</a> 
+                    <p>Stok Tersedia : {{$querys->jml}}</p></center>
                   
                   </div>
                   

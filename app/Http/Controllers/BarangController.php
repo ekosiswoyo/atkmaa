@@ -9,7 +9,8 @@ use App\Model\atk_cart;
 use App\Model\atk_tambah;
 use App\Model\atk_gudang;
 use Carbon\Carbon;
-
+use App\Mail\CartMail;
+use Illuminate\Support\Facades\Mail;
 
 use Auth;
 use Session;
@@ -23,7 +24,7 @@ class BarangController extends Controller
 
     public function index()
     {
-        
+     
 
         $query = DB::table('atk_barangs')->orderBy('id_barang', 'DESC')->first();
         $a=substr($query->id_barang, 2, 3);
@@ -57,7 +58,8 @@ class BarangController extends Controller
     {
         
         $id = Auth::user()->id_pics;
-        $barang = DB::table('atk_barangs')->orderby('id_barang','desc')->paginate(10);
+        $barang = DB::table('atk_gudangs')->join('atk_barangs','atk_gudangs.id_barang','=','atk_barangs.id_barang')->where('atk_gudangs.pic','=',1)->orderby('atk_gudangs.id_barang','desc')->paginate(10);
+
         $query = DB::table('atk_barangs')->get();
 
         $cart = DB::table('atk_carts')
@@ -68,6 +70,19 @@ class BarangController extends Controller
     }
 
     
+    public function addstockbarang()
+    {
+        
+        $id = Auth::user()->id_pics;
+        $barang = DB::table('atk_barangs')->whereNotIn('id_barang', function($q){
+            $q->select('id_barang')->from('atk_gudangs')->where('atk_gudangs.pic','=',1);
+        })->get();
+
+        
+        return view('/app/addstockbarang', compact('barang'));
+    }
+
+
     public function carts()
     {
         
@@ -325,10 +340,7 @@ class BarangController extends Controller
     
         $id_pics = Auth::user()->id_pics;
         $confirm = DB::table('atk_carts')->where('id_pics','=',$id_pics)->where('status','=','0')->get();
-
-
-  
-  
+        $user = DB::table('atk_pics')->where('id_pics','=',$id_pics)->first();
         
     foreach ($confirm as $confirms){
         $ids = $confirms->id_cart;
@@ -338,6 +350,8 @@ class BarangController extends Controller
 
         };
 
+        Mail::to("it.bprmaa@gmail.com")->send(new CartMail($user));
+        
         Session::flash('success_massage','Berhasil disimpan.');
         return redirect('/barangs');
 
@@ -362,6 +376,7 @@ class BarangController extends Controller
 
 
     }
+    
 
     public function orderlist()
     {
@@ -419,30 +434,33 @@ class BarangController extends Controller
         // ->join('atk_barangs','atk_carts.id_barang','=','atk_barangs.id_barang')
         // ->join('atk_satuans','atk_barangs.id_satuan','=','atk_satuans.id_satuan')->where('atk_carts.id_pics','=',$id)->where('atk_carts.status','=','0')->get();
 
-        $query = DB::table('atk_gudangs')->where('pic','!=','GA')->orderBy('id_gudang_brg', 'DESC')->first();
+        $query = DB::table('atk_gudangs')->orderBy('id_gudang_brg', 'DESC')->first();
        
        
         if($query != NULL){
-            $a=substr($query->id_gudang_brg, 2, 3);
-            $b = $a + 1;
+        //     $a=substr($query->id_gudang_brg, 2, 3);
+
+            $id_barang = $query->id_gudang_brg;
     
-            if($b < 10){
-                $id_barang="GK00$b";
-            }else if($b < 100){
-                $id_barang = "GK0$b";
-            }else{
-                $id_barang = "GK$b";
-            }
+        //     if($b < 10){
+        //         $id_barang="GK00$b";
+        //     }else if($b < 100){
+        //         $id_barang = "GK0$b";
+        //     }else{
+        //         $id_barang = "GK$b";
+        //     }
             
 
         }else{
-            $id_barang="GK001";
+            $id_barang="1";
         }
        
 
         $query = DB::table('atk_carts')
         ->join('atk_barangs','atk_carts.id_barang','=','atk_barangs.id_barang')
-        ->join('atk_satuans','atk_barangs.id_satuan','=','atk_satuans.id_satuan')->select('*',DB::raw('DATE(atk_carts.created_at) as dates'))->whereDate('atk_carts.created_at', '=', $date)->where('atk_carts.id_pics','=',$id)->where('atk_carts.status','=',$status)->get();
+        ->join('atk_satuans','atk_barangs.id_satuan','=','atk_satuans.id_satuan')
+        ->join('atk_gudangs','atk_carts.id_barang','=','atk_gudangs.id_barang')
+        ->select('atk_barangs.id_barang','atk_barangs.foto','atk_barangs.nm_barang','atk_carts.jml as jmlorder','atk_carts.id_cart','atk_carts.id_pics','atk_satuans.nm_satuan','atk_gudangs.jml as jmlstok',DB::raw('DATE(atk_carts.created_at) as dates'))->whereDate('atk_carts.created_at', '=', $date)->where('atk_carts.id_pics','=',$id)->where('atk_carts.status','=',$status)->where('atk_gudangs.pic','=',1)->get();
 
         
 
@@ -460,9 +478,9 @@ class BarangController extends Controller
       
         foreach($request->id_cart as $key => $value){ 
 
-        $carts = atk_cart::find($request->id_cart[$key]); 
-        $carts->status = '2'; 
-        $carts->save(); 
+            $carts = atk_cart::find($request->id_cart[$key]); 
+            $carts->status = '2'; 
+            $carts->save(); 
 
 
             $stokcab = DB::table('atk_gudangs')
@@ -471,13 +489,14 @@ class BarangController extends Controller
             ->first();
 
             if($stokcab == NULL){
-                $insert = new atk_gudang;
-                $insert->id_gudang_brg = $request->id_gudang_brg[$key];
-                $insert->id_barang =  $request->id_barang[$key];
-                $insert->pic = $request->id_pics[$key];
-                $insert->jml = $request->jml[$key];
-                $insert->save();
+                    $insert = new atk_gudang;
+                    $insert->id_gudang_brg = $request->id_gudang_brg[$key];
+                    $insert->id_barang =  $request->id_barang[$key];
+                    $insert->pic = $request->id_pics[$key];
+                    $insert->jml = $request->jml[$key];
+                    $insert->save();
             }else{
+
                     $trans = atk_gudang::find($stokcab->id_gudang_brg);
                     // $jmlawal =;
                     $total = $trans->jml + $request->jml[$key];
@@ -524,6 +543,9 @@ class BarangController extends Controller
 
     }
 
+
+
+
     public function confirmsorder()
     {
     
@@ -534,11 +556,12 @@ class BarangController extends Controller
   
   
         
-    foreach ($confirm as $confirms){
-        $ids = $confirms->id_cart;
-        $carts = atk_cart::find($ids); 
-        $carts->status = '3'; 
-        $carts->save(); 
+        foreach ($confirm as $confirms){
+        
+            $ids = $confirms->id_cart;
+            $carts = atk_cart::find($ids); 
+            $carts->status = '3'; 
+            $carts->save();
 
         };
 
@@ -548,5 +571,15 @@ class BarangController extends Controller
 
     }
 
+    public function stockcab(){
+        
+        $id = Auth::user()->id_pics;
+        $sql = DB::table('atk_gudangs')
+            ->join('atk_barangs','atk_gudangs.id_barang','=','atk_barangs.id_barang')
+            ->join('atk_satuans','atk_barangs.id_satuan','=','atk_satuans.id_satuan')
+            ->where('atk_gudangs.pic','=',$id)->get();
+
+        return view('/app/stockcab',compact('sql'));
+    }
 
 }

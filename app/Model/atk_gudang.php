@@ -8,7 +8,7 @@ class atk_gudang extends Model
 {
 
 
-    protected $fillable = ['id_gudang_brg','id_barang','pic','jml','harga','min','max'];
+    protected $fillable = ['id_gudang_brg','id_barang','pic','jml'];
     protected $primaryKey = 'id_gudang_brg';
 
     public function barang()
