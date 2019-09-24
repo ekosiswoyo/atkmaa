@@ -33,13 +33,15 @@
                                         </div>
 
                                         <div class="form-group">    
-                                        <label>Nama Satuan</label>
-                                        <input type="text" class="form-control" placeholder="Masukkan Nama Satuan" name="nm_satuan" value="{{$satuans->nm_satuan}}" required>
+                                          <label>Nama Satuan</label>
+                                          <input type="text" class="form-control" placeholder="Masukkan Nama Satuan" name="nm_satuan" value="{{$satuans->nm_satuan}}" required>
                                         </div>
-                                    </div>
-                                    <div class="buttons">
+
+                                        <div class="buttons">
                                         <button class="btn btn-primary">Save</button>
                                     </div>
+                                    </div>
+                                    
                                     
                                 </div>
                             </div>

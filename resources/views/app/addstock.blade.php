@@ -14,7 +14,7 @@
                 </div>
 
                 <div class="section-body">
-                    <h2 class="section-title">Data Stok</h2>
+                    <h2 class="section-title">Data Transaksi Stok Gudang</h2>
                     <!-- <p class="section-lead">Silahkan Masukkan Detail Nama Barang dan Satuannya yang nantinya digunakan untuk data barang.</p> -->
 
                         <div class="row">
@@ -40,16 +40,20 @@
                                         </div>
                                         </form>
                                         @else
+                                      
                                         <div class="row">
-                                        <a href="/addstockbarang"><button type="submit" class="btn btn-info">TAMBAH BARANG</button></a>
+                                      
                                         <div class="col-12">
                                             <div class="card">
-                                           
+                                            
                                                 <div class="card-header">
-                                                    <h4>Data Transaksi Stok Gudang</h4>
+                                                   
+                                                    <a href="/addstockbarang"><button type="submit" class="btn btn-info float-right">TAMBAH BARANG</button></a>
                                                 </div>
                                               
                                                 <div class="card-body">
+
+                                                
                                                     <div class="table-responsive">
                                                     <form action="/trans/stock" method="POST" role="form" >
                         

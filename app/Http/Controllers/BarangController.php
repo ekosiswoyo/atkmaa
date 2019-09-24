@@ -58,7 +58,7 @@ class BarangController extends Controller
     {
         
         $id = Auth::user()->id_pics;
-        $barang = DB::table('atk_gudangs')->join('atk_barangs','atk_gudangs.id_barang','=','atk_barangs.id_barang')->where('atk_gudangs.pic','=',1)->orderby('atk_gudangs.id_barang','desc')->paginate(10);
+        $barang = DB::table('atk_gudangs')->join('atk_barangs','atk_gudangs.id_barang','=','atk_barangs.id_barang')->where('atk_gudangs.pic','=',1)->orderby('atk_gudangs.id_barang','desc')->paginate(16);
 
         $query = DB::table('atk_barangs')->get();
 
@@ -581,5 +581,19 @@ class BarangController extends Controller
 
         return view('/app/stockcab',compact('sql'));
     }
+
+
+    public function search(Request $request)
+	{
+		
+		$cari = $request->cari;
+ 
+    	
+		$barang = DB::table('atk_gudangs')->join('atk_barangs','atk_gudangs.id_barang','=','atk_barangs.id_barang')->where('atk_barangs.nm_barang','like',"%".$cari."%")->where('atk_gudangs.pic','=',1)->orderby('atk_gudangs.id_barang','desc')->paginate(10);
+ 
+    	
+        return view('/app/search', compact('cari','barang'));
+ 
+	}
 
 }

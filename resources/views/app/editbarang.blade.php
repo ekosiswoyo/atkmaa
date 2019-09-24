@@ -78,10 +78,12 @@
                                                   <input type="file" id="foto" name="foto">
                                         </div>
 
+                                        <div class="buttons">
+                                            <button class="btn btn-primary">Simpan</button>
+                                        </div>
+
                                     </div>
-                                    <div class="buttons">
-                                        <button class="btn btn-primary">Simpan</button>
-                                    </div>
+                                   
                                     
                                 </div>
                             </div>
@@ -100,7 +102,7 @@
                               #
                             </th>
                             <th>Nama Barang</th>
-                            <th>Satuan</th>
+                            <th>Foto</th>
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -109,9 +111,13 @@
                           <tr>
                             <td>{{$datas->id_barang}}</td>
                             <td>{{$datas->nm_barang}}</td>
-                            <td>{{$datas->nm_satuan}}</td>
-                            <td><a href="/barang/{{$datas->id_barang}}/edit"><button type="button" class="btn btn-info">Edit</button></a>
-                            <button class="btn btn-warning" onClick="deleteData('{{$datas->id_barang}}')"  data-id=" {{$datas->id_barang}}"  >Delete</button></td>
+                            @if($datas->foto != NULL)
+                                                            <td><img src="{{asset('storage/lampiran/' . $datas->foto)}}" style="width:70px;height:70px;border-radius:15px;border:3px solid #E51414;"></td>
+                                                            @else
+                                                            <td><img src="{{asset('storage/lampiran/notfound.jpg')}}" style="width:70px;height:70px;border-radius:15px;border:3px solid #E51414;"></td>
+                                                            @endif
+                            <td><a href="/barang/{{$datas->id_barang}}/edit" class="btn btn-icon btn-info" title="Ubah Data"><i class="far fa-edit"></i></a>
+                           <a class="btn btn-icon btn-primary" title="Hapus Data" onClick="deleteData('{{$datas->id_barang}}')"  data-id=" {{$datas->id_barang}}"   ><i class="fas fa-times"></i></td>
                           </tr>
                         @endforeach
                         </tbody>

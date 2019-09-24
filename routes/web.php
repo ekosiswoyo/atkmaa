@@ -58,6 +58,7 @@ Route::post('/order/update', 'BarangController@updateorder');
 
 Route::get('/stockcab', 'BarangController@stockcab');
 Route::get('/addstockbarang', 'BarangController@addstockbarang');
+Route::get('/search','BarangController@search');
 
 // ============================ DATA GUDANG ==============================================
 Route::get('/gudang', 'GudangController@index');

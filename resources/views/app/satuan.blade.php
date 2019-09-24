@@ -33,13 +33,17 @@
                                         </div>
 
                                         <div class="form-group">    
-                                        <label>Nama Satuan</label>
-                                        <input type="text" class="form-control" placeholder="Masukkan Nama Satuan" name="nm_satuan" required>
+                                          <label>Nama Satuan</label>
+                                          <input type="text" class="form-control" placeholder="Masukkan Nama Satuan" name="nm_satuan" required>
                                         </div>
+
+                                        <div class="buttons">
+                                          <button class="btn btn-primary">Simpan</button>
+                                      </div>
                                     </div>
-                                    <div class="buttons">
-                                        <button class="btn btn-primary">Save</button>
-                                    </div>
+                                     
+                                     
+                                    
                                     
                                 </div>
                             </div>
@@ -69,9 +73,10 @@
                             <td>{{$datas->id_satuan}}</td>
                             <td>{{$datas->nm_satuan}}</td>
                             <!-- <td>{{date('d-m-Y', strtotime($datas->created_at))}}</td> -->
-                            <td><a href="/satuan/{{$datas->id_satuan}}/edit"><button type="button" class="btn btn-info">Edit</button></a>
+                           
+                            <td><a href="/satuan/{{$datas->id_satuan}}/edit" class="btn btn-icon btn-info" title="Ubah Data"><i class="far fa-edit"></i></a>
                             </td>
-                            <td><button class="btn btn-warning" onClick="deleteData('{{$datas->id_satuan}}')"  data-id=" {{$datas->id_satuan}}"  >Delete</button></td>
+                            <td><a class="btn btn-icon btn-primary" title="Hapus Data" onClick="deleteData('{{$datas->id_satuan}}')"  data-id=" {{$datas->id_satuan}}" ><i class="fas fa-times"></i></td>
                           </tr>
                         @endforeach
                           
