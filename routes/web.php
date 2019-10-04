@@ -76,6 +76,8 @@ Route::post('/lapbulstok', 'GudangController@lapbulstokpost');
 Route::get('/lappemakaian', 'GudangController@lappemakaian');
 Route::post('/lappemakaian', 'GudangController@lappemakaianpost');
 Route::get('/cetaklapstokmasuk', 'GudangController@stokmasukPDF');
+Route::delete('/delstokbarang/destroy/{id}',['uses' => 'GudangController@delstokbarang']);
+
 
 
 

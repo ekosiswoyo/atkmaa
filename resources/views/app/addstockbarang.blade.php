@@ -36,8 +36,8 @@
                             <td> <form action="/addtogudang" method="post" role="form">
                                         {{csrf_field()}}
                                         <input type="hidden" class="form-control" name="id_barang" value="{{$datas->id_barang}}">
-                      <button type="submit" class="btn btn-icon btn-info" title="Tambahkan Barang Ke Gudang"><i class="fa fa-plus"></i></button>
-</form></td>
+                            <button type="submit" class="btn btn-icon btn-info" title="Tambahkan Barang Ke Gudang"><i class="fa fa-plus"></i></button>
+                            </form></td>
                           </tr>
                         @endforeach
                         </tbody>

@@ -71,6 +71,7 @@
                                                             <th>Buffer Min</th>
                                                             <th>Buffer Max</th>
                                                             <th>Tambah Stok</th>
+                                                            <th>Hapus Stok</th>
                                                             <!-- <th>Action</th> -->
                                                         </tr>
                                                         </thead>
@@ -93,9 +94,10 @@
                                                             <input type="text" class="form-control text-right" id="inlineFormInputGroup2" placeholder="" name="jml[]" style="width:10px;" value="">
                                                             <div class="input-group-append">
                                                             <div class="input-group-text">{{$datas->nm_satuan}}</div>
-                                                        </div>
-                                                        
-                                                        </td>
+                                                            </div>
+                                                            
+                                                            </td>
+                                                            <td> <a class="btn btn-icon btn-warning" title="Hapus Stok" onClick="deleteData('{{$datas->id_gudang_brg}}')"  data-id="{{$datas->id_gudang_brg}}"><i class="fas fa-minus"></i></td>
                                                             
                                                             <!-- <td><a href="/trans/{{$datas->id_gudang_brg}}/edit"><button type="button" class="btn btn-info">TAMBAH STOK</button></a>&nbsp;<a href="/transcab/{{$datas->id_gudang_brg}}/editcab"><button type="button" class="btn btn-warning">STOK KELUAR</button></a>&nbsp;<a href="/usecab/{{$datas->id_gudang_brg}}/usecab"><button type="button" class="btn btn-warning">PEMAKAIAN</button></a></td> -->
                                                         </tr>
@@ -175,7 +177,7 @@
             .then((willDelete) => {
                 if (willDelete) {
                     $.ajax({
-                        url : "{{ url('/gudang/destroy') }}" + '/' + id,
+                        url : "{{ url('/delstokbarang/destroy') }}" + '/' + id,
                         type : "POST",
                         data : {
                           '_method' : 'DELETE', 

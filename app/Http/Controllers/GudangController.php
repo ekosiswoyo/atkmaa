@@ -126,6 +126,18 @@ class GudangController extends Controller
         
     }
 
+    public function delstokbarang($id)
+    {
+        $barang = atk_gudang::findOrFail($id);
+
+        atk_gudang::destroy($id);
+        return response()->json([
+            'success' => true,
+            'message' => 'Deleted'
+        ]);
+        
+    }
+
     public function databarang()
     {
         
