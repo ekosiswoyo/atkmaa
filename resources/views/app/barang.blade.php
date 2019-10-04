@@ -116,7 +116,7 @@
                                                             <td><img src="{{asset('storage/lampiran/notfound.jpg')}}" style="width:70px;height:70px;border-radius:15px;border:3px solid #E51414;"></td>
                                                             @endif
                             <td><a href="/barang/{{$datas->id_barang}}/edit" class="btn btn-icon btn-info" title="Ubah Data"><i class="far fa-edit"></i></a>
-                           <a class="btn btn-icon btn-primary" title="Hapus Data" onClick="deleteData('{{$datas->id_barang}}')"  data-id=" {{$datas->id_barang}}"   ><i class="fas fa-times"></i></td>
+                           <a class="btn btn-icon btn-primary" title="Hapus Data" onClick="deleteData('{{$datas->id_barang}}')"  data-id="{{$datas->id_barang}}"><i class="fas fa-times"></i></td>
                             
                           </tr>
                         @endforeach
