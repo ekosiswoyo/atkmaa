@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>DATA STOK MASUK GUDANG </title>
+    <title>DATA PEMAKAIAN BARANG GUDANG </title>
     <link href=" {{ asset ('public /css/
 bootstrap.min.css') }} "rel="stylesheet">
 <style>
@@ -56,7 +56,7 @@ bootstrap.min.css') }} "rel="stylesheet">
 
                     @endforeach
                 @else
-                <tr><td colspan="8" class="a">TIDAK ADA DATA!</td></tr>
+                <tr><td colspan="6" class="a">TIDAK ADA DATA!</td></tr>
           
             @endif
            

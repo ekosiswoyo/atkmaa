@@ -51,7 +51,7 @@
                             <th>
                             Tanggal Transaksi
                             </th>
-                            
+                            <th>PIC</th>
                             <th>Status</th>
                             <th>Konfirmasi</th>
                             <!-- <th>Aksi</th> -->
@@ -62,6 +62,7 @@
                           <tr>
                             
                             <td>{{$datas->dates}}</td>
+                            <td>{{$datas->nm_pic}}</td>
                             @if($datas->status == '1')
                             <td><div class="badge badge-warning">Pesanan di Proses</div></td>
                             @elseif($datas->status == '2')

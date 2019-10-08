@@ -499,6 +499,7 @@ class TransController extends Controller
        
         $query = DB::table('atk_carts')
         ->join('atk_barangs','atk_carts.id_barang','=','atk_barangs.id_barang')
+        ->join('atk_pics','atk_carts.id_pics','=','atk_pics.id_pics')
         ->join('atk_satuans','atk_barangs.id_satuan','=','atk_satuans.id_satuan')->select('*',DB::raw('DATE(atk_carts.created_at) as dates'))->groupBy('atk_carts.status','dates')->get();
         // // $barang = DB::table('atk_barangs')->where('id_user','=',$id)->where('status','=','0')->orderby('id_barang','desc')->paginate(10);
         $cart = DB::table('atk_carts')
