@@ -45,7 +45,7 @@ class BarangController extends Controller
         }
 
         $data = DB::table('atk_barangs')
-                ->join('atk_satuans','atk_barangs.id_satuan','=','atk_satuans.id_satuan')
+                ->join('atk_satuans','atk_barangs.id_satuan','=','atk_satuans.id_satuan')->where('atk_barangs.tipe','1')
                 ->orderBy('atk_barangs.id_barang','desc')->get();
         $satuan = DB::table('atk_satuans')
             ->orderBy('atk_satuans.id_satuan','asc')->get();
@@ -58,7 +58,7 @@ class BarangController extends Controller
     {
         
         $id = Auth::user()->id_pics;
-        $barang = DB::table('atk_gudangs')->join('atk_barangs','atk_gudangs.id_barang','=','atk_barangs.id_barang')->where('atk_gudangs.pic','=',1)->orderby('atk_gudangs.id_barang','desc')->paginate(16);
+        $barang = DB::table('atk_gudangs')->join('atk_barangs','atk_gudangs.id_barang','=','atk_barangs.id_barang')->where('atk_gudangs.pic','=',1)->where('atk_barangs.tipe','1')->orderby('atk_gudangs.id_barang','desc')->paginate(16);
 
         $query = DB::table('atk_barangs')->get();
 
@@ -74,13 +74,26 @@ class BarangController extends Controller
     {
         
         $id = Auth::user()->id_pics;
-        $barang = DB::table('atk_barangs')->whereNotIn('id_barang', function($q){
+        $barang = DB::table('atk_barangs')->where('atk_barangs.tipe',1)->whereNotIn('id_barang', function($q){
             $q->select('id_barang')->from('atk_gudangs')->where('atk_gudangs.pic','=',1);
         })->get();
 
         
         return view('/app/addstockbarang', compact('barang'));
     }
+
+    public function addstockbarangnon()
+    {
+        
+        $id = Auth::user()->id_pics;
+        $barang = DB::table('atk_barangs')->where('atk_barangs.tipe',2)->whereNotIn('id_barang', function($q){
+            $q->select('id_barang')->from('atk_gudangs')->where('atk_gudangs.pic','=',1);
+        })->get();
+
+        
+        return view('/app/addstockbarangnon', compact('barang'));
+    }
+
 
 
     public function carts()
@@ -178,6 +191,7 @@ class BarangController extends Controller
                     $barang->min_cab = $min_cab;
                     $barang->max_cab = $max_cab;
                     $barang->foto = NULL;
+                    $barang->tipe = '1';
                     $barang->save();
                 }else{
                    
@@ -193,6 +207,7 @@ class BarangController extends Controller
                     $barang->min_cab = $min_cab;
                     $barang->max_cab = $max_cab;
                     $barang->foto = $foto;
+                    $barang->tipe = '1';
                     $barang->save();
                 }
                 
@@ -205,7 +220,7 @@ class BarangController extends Controller
     public function edit($id)
     { 
         $data = DB::table('atk_barangs')
-        ->join('atk_satuans','atk_barangs.id_satuan','=','atk_satuans.id_satuan')
+        ->join('atk_satuans','atk_barangs.id_satuan','=','atk_satuans.id_satuan')->where('atk_barangs.tipe','1')
         ->orderBy('atk_barangs.id_barang','desc')->get();
 
         $satuan = DB::table('atk_satuans')
@@ -230,6 +245,7 @@ class BarangController extends Controller
         $barang->max_ga = $request->max_ga;
         $barang->min_cab = $request->min_cab;
         $barang->max_cab = $request->max_cab;
+        $barang->tipe = '1';
         $barang->save();
     }else{
         $foto = $barang->id_barang.'.'.date('dmYHis').'.'.$request->foto->getClientOriginalName();
@@ -242,12 +258,64 @@ class BarangController extends Controller
         $barang->min_cab = $request->min_cab;
         $barang->max_cab = $request->max_cab;
         $barang->foto = $foto;
+        $barang->tipe = '1';
         $barang->save();
     }
 
 
     Session::flash('success_massage','Data Pelamar, berhasil di edit');
     return redirect('/barang');
+    }
+
+
+    public function editnoncetak($id)
+    { 
+        $data = DB::table('atk_barangs')
+        ->join('atk_satuans','atk_barangs.id_satuan','=','atk_satuans.id_satuan')->where('atk_barangs.tipe','2')
+        ->orderBy('atk_barangs.id_barang','desc')->get();
+
+        $satuan = DB::table('atk_satuans')
+        ->orderBy('atk_satuans.id_satuan','asc')->get();
+
+        $barangs = DB::table('atk_barangs')
+        ->join('atk_satuans','atk_barangs.id_satuan','=','atk_satuans.id_satuan')
+        ->where('id_barang',$id)->first();
+
+      return view ('/app/editnoncetak', compact('barangs','satuan','data'));
+    }
+
+
+    public function updatenoncetak(Request $request,$id)
+    {
+    $barang = atk_barang::find($id);
+    if($request->foto == NULL){
+        $barang->nm_barang = $request->nm_barang;
+        $barang->id_satuan = $request->id_satuan;
+        $barang->harga = $request->harga;
+        $barang->min_ga = $request->min_ga;
+        $barang->max_ga = $request->max_ga;
+        $barang->min_cab = $request->min_cab;
+        $barang->max_cab = $request->max_cab;
+        $barang->tipe = '2';
+        $barang->save();
+    }else{
+        $foto = $barang->id_barang.'.'.date('dmYHis').'.'.$request->foto->getClientOriginalName();
+        $filefoto = $request->foto->storeAs('public/lampiran', $foto);
+        $barang->nm_barang = $request->nm_barang;
+        $barang->id_satuan = $request->id_satuan;
+        $barang->harga = $request->harga;
+        $barang->min_ga = $request->min_ga;
+        $barang->max_ga = $request->max_ga;
+        $barang->min_cab = $request->min_cab;
+        $barang->max_cab = $request->max_cab;
+        $barang->foto = $foto;
+        $barang->tipe = '2';
+        $barang->save();
+    }
+
+
+    Session::flash('success_massage','Data Pelamar, berhasil di edit');
+    return redirect('/atknoncetak');
     }
 
 
@@ -582,6 +650,87 @@ class BarangController extends Controller
         return view('/app/stockcab',compact('sql'));
     }
 
+    public function atknoncetak(){
+        
+        $query = DB::table('atk_barangs')->orderBy('id_barang', 'DESC')->first();
+        $a=substr($query->id_barang, 2, 3);
+        $b = $a + 1;
+        if($query){
+
+            if($b < 10){
+                $id_barang="BR00$b";
+            }else if($b < 100){
+                $id_barang = "BR0$b";
+            }else{
+                $id_barang = "BR$b";
+            }
+            
+
+        }else{
+            $id_barang="BR001";
+        }
+
+        $data = DB::table('atk_barangs')
+                ->join('atk_satuans','atk_barangs.id_satuan','=','atk_satuans.id_satuan')->where('atk_barangs.tipe','2')
+                ->orderBy('atk_barangs.id_barang','desc')->get();
+        $satuan = DB::table('atk_satuans')
+            ->orderBy('atk_satuans.id_satuan','asc')->get();
+
+
+        return view('/app/atknoncetak', compact('id_barang','data','satuan','a'));
+    }
+
+    public function atknoncetakinsert(Request $request)
+    {
+
+               
+                $id_barang= $request->input('id_barang');
+                $nm_barang = $request->input('nm_barang');
+                $id_satuan= $request->input('id_satuan');
+                $harga = $request->input('harga');
+                $hargafix = str_replace(".", "", $harga);
+                $min_ga= $request->input('min_ga');
+                $max_ga = $request->input('max_ga');
+                $min_cab= $request->input('min_cab');
+                $max_cab= $request->input('max_cab');
+                $photo= $request->input('foto');
+               
+                if($request->foto == NULL){
+                    $barang = new atk_barang;
+                    $barang->id_barang = $id_barang;
+                    $barang->nm_barang = $nm_barang;
+                    $barang->id_satuan = $id_satuan;
+                    $barang->harga = $hargafix;
+                    $barang->min_ga = $min_ga;
+                    $barang->max_ga = $max_ga;
+                    $barang->min_cab = $min_cab;
+                    $barang->max_cab = $max_cab;
+                    $barang->foto = NULL;
+                    $barang->tipe = '2';
+                    $barang->save();
+                }else{
+                   
+                    $foto = $id_barang.'.'.date('dmYHis').'.'.$request->foto->getClientOriginalName();
+                    $filefoto = $request->foto->storeAs('public/lampiran', $foto);
+                    $barang = new atk_barang;
+                    $barang->id_barang = $id_barang;
+                    $barang->nm_barang = $nm_barang;
+                    $barang->id_satuan = $id_satuan;
+                    $barang->harga = $hargafix;
+                    $barang->min_ga = $min_ga;
+                    $barang->max_ga = $max_ga;
+                    $barang->min_cab = $min_cab;
+                    $barang->max_cab = $max_cab;
+                    $barang->foto = $foto;
+                    $barang->tipe = '2';
+                    $barang->save();
+                }
+                
+
+                Session::flash('success_massage','Berhasil disimpan.');
+                return redirect('/atknoncetak');
+
+    }
 
     public function search(Request $request)
 	{

@@ -176,8 +176,8 @@
            @if(Auth::user()->id_pics != 1)
            <li><a class="nav-link" href="/barangs"><i class="fas fa-plus-square"></i> <span>Pengajuan  </span></a></li>
 
-           <li><a class="nav-link" href="/stockcab"><i class="fas fa-database"></i> <span>Stok Barang Cetak</span></a></li>
-           <li><a class="nav-link" href="/stockatk"><i class="fas fa-database"></i> <span>Stok ATK Cetak</span></a></li>
+           <li><a class="nav-link" href="/stockcab"><i class="fas fa-database"></i> <span>Stok ATK Cetak</span></a></li>
+           <li><a class="nav-link" href="/atknoncetak"><i class="fas fa-database"></i> <span>Stok ATK Non Cetak</span></a></li>
            @endif
             @if(Auth::user()->id_pics == 1)
             <li class="menu-header">Data Master</li>

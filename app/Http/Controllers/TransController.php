@@ -62,6 +62,7 @@ class TransController extends Controller
         ->join('atk_barangs','atk_gudangs.id_barang','=','atk_barangs.id_barang')
         ->join('atk_satuans','atk_barangs.id_satuan','=','atk_satuans.id_satuan')
         ->where('atk_gudangs.pic','=',1)
+        ->where('atk_barangs.tipe',1)
         ->orderBy('atk_gudangs.id_gudang_brg','asc')->get();
 
         $awals = DB::table('atk_barangs')
@@ -69,6 +70,35 @@ class TransController extends Controller
         
 
         return view('/app/addstock', compact('querysql','querynow','monthnow','yearnow','data','awals','querysqls'));
+    }
+
+    public function addstocknoncetak()
+    {
+        
+        
+        $querysql = DB::table('atk_gudangs')
+            ->orderBy('atk_gudangs.id_gudang_brg','desc')->first();
+
+            $querysqls = DB::table('atk_awals')
+            ->orderBy('atk_awals.id_atk_awal','desc')->first();
+
+        $querynow = Carbon::now();
+
+        
+        $monthnow = $querynow->month;
+        $yearnow = $querynow->year;
+        $data = DB::table('atk_gudangs')
+        ->join('atk_barangs','atk_gudangs.id_barang','=','atk_barangs.id_barang')
+        ->join('atk_satuans','atk_barangs.id_satuan','=','atk_satuans.id_satuan')
+        ->where('atk_barangs.tipe',2)
+        ->where('atk_gudangs.pic','=',1)
+        ->orderBy('atk_gudangs.id_gudang_brg','asc')->get();
+
+        $awals = DB::table('atk_barangs')
+            ->orderBy('atk_barangs.id_barang','desc')->get();
+        
+
+        return view('/app/addstocknoncetak', compact('querysql','querynow','monthnow','yearnow','data','awals','querysqls'));
     }
 
     public function copystock()

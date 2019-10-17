@@ -58,7 +58,14 @@ Route::post('/order/update', 'BarangController@updateorder');
 
 Route::get('/stockcab', 'BarangController@stockcab');
 Route::get('/addstockbarang', 'BarangController@addstockbarang');
+Route::get('/addstockbarangnon', 'BarangController@addstockbarangnon');
 Route::get('/search','BarangController@search');
+
+Route::get('/atknoncetak','BarangController@atknoncetak');
+Route::post('/atknoncetak','BarangController@atknoncetakinsert');
+Route::get('/atknoncetak/{id}/edit', 'BarangController@editnoncetak');
+Route::post('/atknoncetak/{id}', 'BarangController@updatenoncetak');
+
 
 // ============================ DATA GUDANG ==============================================
 Route::get('/gudang', 'GudangController@index');
@@ -78,12 +85,11 @@ Route::post('/lappemakaian', 'GudangController@lappemakaianpost');
 Route::get('/cetaklapstokmasuk', 'GudangController@stokmasukPDF');
 Route::delete('/delstokbarang/destroy/{id}',['uses' => 'GudangController@delstokbarang']);
 
-
-
-
 // ============================ DATA TRANSAKSI TAMBAH STOK GA==============================================
+
 Route::get('/trans', 'TransController@index');
 Route::get('/addstock', 'TransController@addstock');
+Route::get('/addstocknoncetak', 'TransController@addstocknoncetak');
 Route::post('/trans/copystock', 'TransController@copystock');
 Route::post('/trans/stock', 'TransController@stock');
 Route::get('/transaksiall', 'TransController@transaksiall');
@@ -104,12 +110,10 @@ Route::post('/cabang/{id}', 'TransController@cabangupdate');
 
 Route::get('/cetak',  'TransController@makePDF');
 
-
-
-
 // ============================ DATA TRANSAKSI TAMBAH STOK CAB ==============================================
 Route::get('/transcab', 'TransController@indexcab');
 // Route::get('/trans/{id}', 'TransController@all');
 Route::get('/trans/{id}/edit', 'TransController@edit');
 Route::post('/trans/{id}', 'TransController@update');
 Route::post('/trans/copyall', 'TransController@copyall');
+

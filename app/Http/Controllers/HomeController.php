@@ -32,7 +32,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-             $barang = DB::table('atk_gudangs')->join('atk_barangs','atk_gudangs.id_barang','=','atk_barangs.id_barang')->where('atk_gudangs.pic','=',1)->orderby('atk_gudangs.id_barang','desc')->limit(8)->get();
+             $barang = DB::table('atk_gudangs')->join('atk_barangs','atk_gudangs.id_barang','=','atk_barangs.id_barang')->where('atk_gudangs.pic','=',1)->where('atk_barangs.tipe','1')->orderby('atk_gudangs.id_barang','desc')->limit(8)->get();
              return view('home',compact('barang'));
     }
 
